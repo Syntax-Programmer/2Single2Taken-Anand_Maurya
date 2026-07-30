@@ -5,10 +5,6 @@ from pathlib import Path
 import numpy as np
 import polars as pl
 
-# ============================================================================
-# Configuration
-# ============================================================================
-
 ML_ROOT = Path(__file__).resolve().parents[1]
 
 PROCESSED_DATA_DIR = ML_ROOT / "data" / "processed"
@@ -19,11 +15,6 @@ TRAINING_PARQUET = PROCESSED_DATA_DIR / "training.parquet"
 TRAINING_CSV = PROCESSED_DATA_DIR / "training.csv"
 
 RANDOM_STATE = 42
-
-
-# ============================================================================
-# Training schema
-# ============================================================================
 
 CATEGORICAL_FEATURES = [
     "case_type",
@@ -50,32 +41,18 @@ TARGET_COLUMNS = [
 ]
 
 
-# ============================================================================
-# Loading
-# ============================================================================
-
-
 def LoadCases() -> pl.DataFrame:
     if not INPUT_DATASET.exists():
         raise FileNotFoundError(f"Dataset not found: {INPUT_DATASET}")
 
     df = pl.read_parquet(INPUT_DATASET)
-
     if df.height == 0:
         raise ValueError("cases.parquet contains no rows.")
 
     return df
 
 
-# ============================================================================
-# Validation
-# ============================================================================
-
-
-def ValidateInput(
-    df: pl.DataFrame,
-) -> None:
-
+def ValidateInput(df: pl.DataFrame) -> None:
     required = {
         "case_type",
         "court",
@@ -88,85 +65,43 @@ def ValidateInput(
         "document_word_count",
         "document_sentence_count",
     }
-
     missing = required - set(df.columns)
 
     if missing:
         raise ValueError("Missing required columns: " + ", ".join(sorted(missing)))
 
 
-# ============================================================================
-# Math utilities
-# ============================================================================
-
-
-def Standardize(
-    values: np.ndarray,
-) -> np.ndarray:
-
-    values = np.asarray(
-        values,
-        dtype=np.float64,
-    )
-
+def Standardize(values: np.ndarray) -> np.ndarray:
+    values = np.asarray(values, dtype=np.float64)
     mean = float(np.nanmean(values))
-
     std = float(np.nanstd(values))
 
     if not np.isfinite(std) or std < 1e-12:
-        return np.zeros_like(
-            values,
-            dtype=np.float64,
-        )
-
+        return np.zeros_like(values, dtype=np.float64)
     result = (values - mean) / std
 
-    return np.nan_to_num(
-        result,
-        nan=0.0,
-        posinf=0.0,
-        neginf=0.0,
-    )
+    return np.nan_to_num(result, nan=0.0, posinf=0.0, neginf=0.0)
 
 
-def Sigmoid(
-    values: np.ndarray,
-) -> np.ndarray:
-
-    values = np.clip(
-        values,
-        -30.0,
-        30.0,
-    )
+def Sigmoid(values: np.ndarray) -> np.ndarray:
+    values = np.clip(values, -30.0, 30.0)
 
     return 1.0 / (1.0 + np.exp(-values))
 
 
-# ============================================================================
-# Deterministic categorical effects
-# ============================================================================
-
-
-def StableCategoryEffect(
-    values: list[object],
-    scale: float = 1.0,
-) -> np.ndarray:
-
+def StableCategoryEffect(values: list[object], scale: float = 1.0) -> np.ndarray:
     effects: list[float] = []
 
     for value in values:
         if value is None:
             effects.append(0.0)
             continue
-
         text = str(value).strip().lower()
-
         if not text:
             effects.append(0.0)
             continue
 
         accumulator = 0
-
         for index, character in enumerate(
             text,
             start=1,
@@ -174,13 +109,9 @@ def StableCategoryEffect(
             accumulator += index * ord(character)
 
         normalized = (accumulator % 2001) / 1000.0 - 1.0
-
         effects.append(normalized * scale)
 
-    return np.asarray(
-        effects,
-        dtype=np.float64,
-    )
+    return np.asarray(effects, dtype=np.float64)
 
 
 # ============================================================================
@@ -188,10 +119,7 @@ def StableCategoryEffect(
 # ============================================================================
 
 
-def NormalizeCategoricalColumns(
-    df: pl.DataFrame,
-) -> pl.DataFrame:
-
+def NormalizeCategoricalColumns(df: pl.DataFrame) -> pl.DataFrame:
     expressions: list[pl.Expr] = []
 
     for column in CATEGORICAL_FEATURES:
