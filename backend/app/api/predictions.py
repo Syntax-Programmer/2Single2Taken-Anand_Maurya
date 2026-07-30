@@ -4,8 +4,8 @@ from fastapi import (
     HTTPException,
     UploadFile,
 )
-from predictions import PredictionResponse
 
+from backend.app.schemas.predictions import PredictionResponse
 from backend.app.services.case_parser import CaseParser
 from backend.app.services.document import DocumentService
 from backend.app.services.predictions import PredictionService
