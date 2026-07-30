@@ -6,6 +6,6 @@ python-multipart
 python-docx
 
 numpy
-pandas
+polars
 scikit-learn
 joblib
