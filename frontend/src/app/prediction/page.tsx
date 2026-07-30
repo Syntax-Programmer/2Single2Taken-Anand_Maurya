@@ -139,7 +139,7 @@ export default function PredictionCenter() {
                   {/* Satyameva Jayate Background */}
                   <div 
                     className="absolute inset-0 z-0 opacity-[0.03] bg-center bg-no-repeat bg-contain pointer-events-none"
-                    style={{ backgroundImage: "url('/images/satyamev-jayate.png')", backgroundSize: "40%" }}
+                    style={{ backgroundImage: "url('/images/satyameva-jayate.png')", backgroundSize: "40%" }}
                   />
                   
                   <div
