@@ -1,26 +1,65 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --font-inter: "Inter", sans-serif;
+    --font-plex: "IBM Plex Sans", sans-serif;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-slate-700 antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  /* Visible, deliberate focus ring — never suppressed */
+  :focus-visible {
+    outline: 2px solid #0f4c81;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  h1, h2, h3, h4 {
+    @apply text-slate-900;
+    letter-spacing: -0.01em;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* Hairline gold rule — the platform's signature divider, styled after
+     the ruled line under a court order's letterhead. */
+  .rule-gold {
+    position: relative;
+  }
+  .rule-gold::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 2px;
+    margin-top: 18px;
+    background: linear-gradient(90deg, #b08d57, rgba(176, 141, 87, 0.15));
+  }
+
+  .rule-gold-center::after {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
