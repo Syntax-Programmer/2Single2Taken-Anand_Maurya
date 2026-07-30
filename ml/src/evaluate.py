@@ -12,10 +12,7 @@ from sklearn.metrics import (
 )
 
 
-def EvaluateRegression(
-    y_true,
-    y_pred,
-) -> dict[str, float]:
+def EvaluateRegression(y_true, y_pred) -> dict[str, float]:
     return {
         "mae": mean_absolute_error(y_true, y_pred),
         "rmse": mean_squared_error(y_true, y_pred) ** 0.5,
@@ -23,11 +20,7 @@ def EvaluateRegression(
     }
 
 
-def EvaluateClassification(
-    y_true,
-    y_pred,
-    y_probability=None,
-) -> dict[str, float]:
+def EvaluateClassification(y_true, y_pred, y_probability=None) -> dict[str, float]:
     metrics = {
         "accuracy": accuracy_score(y_true, y_pred),
         "precision": precision_score(y_true, y_pred, zero_division=0),
