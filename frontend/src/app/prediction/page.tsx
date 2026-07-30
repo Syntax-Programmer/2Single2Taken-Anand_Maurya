@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef} from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Navbar } from "@/components/layout/navbar";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -135,17 +135,21 @@ export default function PredictionCenter() {
                 exit={{ opacity: 0, y: -20, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
               >
-                <Card className="border-2 border-dashed border-border overflow-hidden relative">
+                <Card className="relative overflow-hidden border-2 border-dashed border-border bg-white/90 backdrop-blur-sm">
                   {/* Satyameva Jayate Background */}
-                  <div 
-                    className="absolute inset-0 z-0 opacity-[0.03] bg-center bg-no-repeat bg-contain pointer-events-none"
-                    style={{ backgroundImage: "url('/public/images/satyameva-jayate.png')", backgroundSize: "40%" }}
-                  />
+                  <div
+                  className="absolute inset-0 z-0 opacity-10 bg-center bg-no-repeat pointer-events-none"
+                  style={{
+                    backgroundImage: "url('/images/satyameva-jayate.png')",
+                    backgroundSize: "280px",
+                    backgroundPosition: "center",
+                    }}
+                    />
                   
                   <div
                     className={cn(
-                      "flex flex-col items-center justify-center p-16 md:p-24 transition-colors relative z-10",
-                      isDragging ? "bg-primary/5 border-primary/50" : "bg-card/90 hover:bg-background/90"
+                      "relative z-10 flex flex-col items-center justify-center p-16 md:p-24 transition-colors",
+                      isDragging ? "bg-primary/5" : "bg-transparent hover:bg-primary/[0.02]"
                     )}
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
