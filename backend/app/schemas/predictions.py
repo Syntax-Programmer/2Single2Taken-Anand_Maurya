@@ -1,5 +1,3 @@
-from typing import Literal
-
 from pydantic import BaseModel, Field
 
 
@@ -18,20 +16,9 @@ class CaseInfo(BaseModel):
 
 
 class CasePrediction(BaseModel):
-    complexity: Literal[
-        "Low",
-        "Medium",
-        "High",
-    ]
-
-    adjournment_probability: float = Field(
-        ge=0.0,
-        le=100.0,
-    )
-
-    predicted_duration_days: float = Field(
-        ge=0.0,
-    )
+    complexity: float = Field(ge=0.0, le=100.0)
+    adjournment_probability: float = Field(ge=0.0, le=100.0)
+    predicted_duration_days: float = Field(ge=0.0)
 
 
 class PredictionResponse(BaseModel):
