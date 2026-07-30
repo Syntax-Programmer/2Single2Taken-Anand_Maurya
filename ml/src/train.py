@@ -9,6 +9,7 @@ import polars as pl
 from sklearn.base import BaseEstimator
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
+from torch._C import Type
 
 from .config import RANDOM_STATE, TEST_SIZE
 from .evaluate import (
@@ -266,7 +267,7 @@ def LoadModel(
 
     artifact = joblib.load(path)
     if not isinstance(artifact, dict):
-        raise ValueError("Invalid model artifact.")
+        raise TypeError("Invalid model artifact.")
     if "pipeline" not in artifact:
         raise ValueError("Model artifact does not contain a pipeline.")
 
