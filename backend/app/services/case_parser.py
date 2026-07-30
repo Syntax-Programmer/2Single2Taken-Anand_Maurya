@@ -2,7 +2,7 @@ import re
 from dataclasses import dataclass, field
 from datetime import date, datetime
 
-from app.services.document import DocumentContent
+from backend.app.services.document import DocumentContent
 
 
 @dataclass
