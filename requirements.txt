@@ -2,28 +2,10 @@ fastapi
 uvicorn[standard]
 pydantic
 python-multipart
-httpx
 
 python-docx
 
 numpy
-scipy
-polars
-pyarrow
-openpyxl
-
+pandas
 scikit-learn
 joblib
-
-ultralytics
-
-transformers
-datasets
-tokenizers
-sentence-transformers
-
-shap
-
-python-dotenv
-tqdm
-requests
