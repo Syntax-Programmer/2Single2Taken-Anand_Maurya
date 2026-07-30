@@ -3,7 +3,7 @@ from app.schemas.predictions import (
     CasePrediction,
     PredictionResponse,
 )
-from app.services.case_parser import ParsedCase
+from backend.app.services.case_parser import ParsedCase
 
 
 class PredictionService:
