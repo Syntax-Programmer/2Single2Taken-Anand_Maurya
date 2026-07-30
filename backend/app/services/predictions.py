@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Any, ClassVar
 
 import joblib
-import pandas as pd
+import polars as pl
 
 from backend.app.schemas.predictions import (
     CaseInfo,
@@ -97,7 +97,7 @@ class PredictionService:
         )
 
     @staticmethod
-    def BuildFeatures(case: ParsedCase) -> pd.DataFrame:
+    def BuildFeatures(case: ParsedCase) -> pl.DataFrame:
         features = {
             "case_type": case.case_type or "Unknown",
             "court": case.court or "Unknown",
@@ -111,10 +111,7 @@ class PredictionService:
             "precedent_count": len(case.precedents or []),
         }
 
-        return pd.DataFrame(
-            [features],
-            columns=FEATURE_COLUMNS,
-        )
+        return pl.DataFrame([features]).select(FEATURE_COLUMNS)
 
     def Predict(self, case: ParsedCase) -> CasePrediction:
         self.LoadModels()
