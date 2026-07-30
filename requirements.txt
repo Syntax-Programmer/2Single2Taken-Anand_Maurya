@@ -9,19 +9,12 @@ python-docx
 numpy
 scipy
 polars
-pandas
 pyarrow
 openpyxl
 
 scikit-learn
 joblib
 
-xgboost
-lightgbm
-
-matplotlib
-
-pillow
 ultralytics
 
 transformers
