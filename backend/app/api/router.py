@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from backend.app.api.health import router as health_router
-from backend.app.api.predictions import router as predictions_router
+from .health import router as health_router
+from .predictions import router as predictions_router
 
 api_router = APIRouter()
 
