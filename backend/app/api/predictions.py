@@ -5,10 +5,10 @@ from fastapi import (
     UploadFile,
 )
 
-from app.schemas.predictions import PredictionResponse
-from app.services.case_parser import CaseParser
-from app.services.document import DocumentService
-from app.services.predictions import PredictionService
+from backend.app.schemas.predictions import PredictionResponse
+from backend.app.services.case_parser import CaseParser
+from backend.app.services.document import DocumentService
+from backend.app.services.predictions import PredictionService
 
 router = APIRouter()
 

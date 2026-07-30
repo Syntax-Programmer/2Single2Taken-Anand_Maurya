@@ -4,12 +4,12 @@ from typing import Any, ClassVar
 import joblib
 import pandas as pd
 
-from app.schemas.predictions import (
+from backend.app.schemas.predictions import (
     CaseInfo,
     CasePrediction,
     PredictionResponse,
 )
-from app.services.case_parser import ParsedCase
+from backend.app.services.case_parser import ParsedCase
 
 # ============================================================================
 # Model paths
