@@ -4,6 +4,8 @@ pydantic
 python-multipart
 httpx
 
+python-docx
+
 numpy
 scipy
 polars
@@ -19,15 +21,8 @@ lightgbm
 
 matplotlib
 
-opencv-python
 pillow
 ultralytics
-
-
-torch
-torchvision
-torchaudio
-
 
 transformers
 datasets
