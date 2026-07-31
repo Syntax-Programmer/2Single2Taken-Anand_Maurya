@@ -13,6 +13,7 @@ import {
     Scale,
     Clock,
     AlertTriangle,
+    CheckCircle,
     ChevronRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -473,22 +474,69 @@ export default function PredictionCenter() {
                                         </CardContent>
                                     </Card>
 
-                                    <Card className="shadow-premium border-t-4 border-t-status-error">
-                                        <CardHeader className="pb-2">
-                                            <CardDescription className="uppercase tracking-wider font-semibold text-primary/70">
-                                                Adjournment Prob.
-                                            </CardDescription>
-                                            <CardTitle className="text-3xl font-ibm-plex-sans mt-2 text-status-error">
-                                                {response?.prediction.adjournment_probability}
-                                            </CardTitle>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <div className="flex items-center gap-2 mt-4 text-sm text-foreground/60 bg-background p-3 rounded-lg border border-status-error/10">
-                                                <AlertTriangle className="w-4 h-4 text-status-error" />
-                                                High risk of delay
-                                            </div>
-                                        </CardContent>
-                                    </Card>
+                                    {(() => {
+                                        const probability =
+                                            response?.prediction.adjournment_probability ?? 0;
+
+                                        const risk =
+                                            probability >= 65
+                                                ? {
+                                                      label: "High risk of delay",
+                                                      border: "border-t-status-error",
+                                                      text: "text-status-error",
+                                                      borderLight: "border-status-error/10",
+                                                      Icon: AlertTriangle,
+                                                  }
+                                                : probability >= 35
+                                                  ? {
+                                                        label: "Moderate risk of delay",
+                                                        border: "border-t-yellow-500",
+                                                        text: "text-yellow-600",
+                                                        borderLight: "border-yellow-500/10",
+                                                        Icon: AlertTriangle,
+                                                    }
+                                                  : {
+                                                        label: "Low risk of delay",
+                                                        border: "border-t-green-500",
+                                                        text: "text-green-600",
+                                                        borderLight: "border-green-500/10",
+                                                        Icon: CheckCircle,
+                                                    };
+
+                                        const RiskIcon = risk.Icon;
+
+                                        return (
+                                            <Card
+                                                className={`shadow-premium border-t-4 ${risk.border}`}
+                                            >
+                                                <CardHeader className="pb-2">
+                                                    <CardDescription className="uppercase tracking-wider font-semibold text-primary/70">
+                                                        Adjournment Probability
+                                                    </CardDescription>
+
+                                                    <CardTitle
+                                                        className={`text-3xl font-ibm-plex-sans mt-2 ${risk.text}`}
+                                                    >
+                                                        {probability.toFixed(1)}%
+                                                    </CardTitle>
+                                                </CardHeader>
+
+                                                <CardContent>
+                                                    <div
+                                                        className={`flex items-center gap-2 mt-4 text-sm bg-background p-3 rounded-lg border ${risk.borderLight}`}
+                                                    >
+                                                        <RiskIcon
+                                                            className={`w-4 h-4 ${risk.text}`}
+                                                        />
+
+                                                        <span className={risk.text}>
+                                                            {risk.label}
+                                                        </span>
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        );
+                                    })()}
 
                                     <Card className="shadow-premium border-t-4 border-t-accent">
                                         <CardHeader className="pb-2">
