@@ -13,7 +13,7 @@
   --color-status-error: var(--status-error);
   --color-status-warning: var(--status-warning);
 
-  --font-sans: var(--font-inter), var(--font-ibm-plex-sans), sans-serif;
+  --font-sans: var(--font-ibm-plex-sans), sans-serif;
   --radius-xl: 1rem;
 }
 

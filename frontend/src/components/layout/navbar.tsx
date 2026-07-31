@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
+import { Logo } from "@/components/ui/logo";
+
 export function Navbar() {
   const pathname = usePathname();
   const isLanding = pathname === "/";
@@ -33,35 +35,31 @@ export function Navbar() {
       )}
     >
       <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded bg-primary text-white flex items-center justify-center font-bold font-ibm-plex-sans text-xl shadow-md group-hover:scale-105 transition-transform">
-            D
-          </div>
-          <span
-            className={cn(
-              "font-ibm-plex-sans font-bold text-xl tracking-tight transition-colors",
-              isLanding && !scrolled ? "text-white drop-shadow-md" : "text-primary"
-            )}
-          >
-            DocketIQ
-          </span>
+        <Link href="/" className="group">
+          <Logo />
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
           <Link
             href="/"
             className={cn(
-              "text-sm font-medium transition-colors hover:text-accent",
-              isLanding && !scrolled ? "text-white/90" : "text-foreground"
+              "text-sm font-medium transition-colors hover:text-accent text-foreground/80 hover:text-primary"
             )}
           >
             Home
           </Link>
           <Link
+            href="/cases"
+            className={cn(
+              "text-sm font-medium transition-colors hover:text-accent text-foreground/80 hover:text-primary"
+            )}
+          >
+            My Cases
+          </Link>
+          <Link
             href="/prediction"
             className={cn(
-              "text-sm font-medium transition-colors hover:text-accent",
-              isLanding && !scrolled ? "text-white/90" : "text-foreground"
+              "text-sm font-medium transition-colors hover:text-accent text-foreground/80 hover:text-primary"
             )}
           >
             Prediction Center
